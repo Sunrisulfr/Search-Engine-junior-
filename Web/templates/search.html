@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>News Search Engine</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>News-Search-Engine</h1>
+            <form name="search" action="/search/" method="POST">
+                <p>
+                    {% if key %}
+                        <input type="text" name="key_word" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="key_word">
+                    {% endif %}
+                    <input type="submit" value="Search">
+                </p>
+            </form>
+        </div>
+        <hr/>
+        {% if error%}
+            {% for doc in docs%}
+            <div id="doc">
+                <ul id="navigation">
+                    <p><big><a href="{{ doc.url }}" target="_blank">{{doc.title}}</a></big></p>
+                    <p>{{doc.time}}<br/>{{doc.snippet}}<br/>
+                    <a href="{{ doc.url }}" target="_blank">{{doc.url}}</a>
+                    </p>
+                </ul>
+            </div>
+            <br/>
+            {% endfor %}
+        {% block next %}
+        <ul>
+            {% for i in page %}
+                <a href="/search/page/{{i}}/">{{i}}</a>&nbsp;
+            {% endfor %}
+        </ul>
+        {% endblock %}
+        {% else %}
+            <p>对不起，没有您搜索的网页！</p>
+        {% endif %}
+
+		<div id="footer">
+			<hr>
+            &copy; 2018 Sunrisulfr
+        </div>
+
+    </div>
+</body>
+</html>
